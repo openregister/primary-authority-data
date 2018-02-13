@@ -16,7 +16,7 @@ read_page <- function(url) {
 
 all_pages <- map_df(urls, read_page)
 
-all_primary_authorities <- 
+all_primary_authorities <-
   all_pages %>%
   mutate(`Regulatory Functions` = map(`Regulatory Functions`, ~ str_split(.x, "\n[\n, ]*"))[[1]])
 
@@ -30,3 +30,8 @@ all_primary_authorities %>%
   distinct() %>%
   arrange(`Regulatory Functions`) %>%
   write_tsv(here("lists", "beis-regulatory-functions.tsv"))
+
+all_primary_authorities %>%
+  distinct(`Partnership Type`) %>%
+  arrange(`Partnership Type`) %>%
+  write_tsv(here("lists", "beis-partnership-type.tsv"))
